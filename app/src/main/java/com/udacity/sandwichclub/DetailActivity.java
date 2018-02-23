@@ -14,8 +14,8 @@ import com.udacity.sandwichclub.utils.JsonUtils;
 
 public class DetailActivity extends AppCompatActivity {
 
-    ActivityDetailBinding mBinding;
-
+    private ActivityDetailBinding mBinding;
+    private Sandwich sandwich;
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
@@ -42,14 +42,14 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
+        sandwich = JsonUtils.parseSandwichJson(json);
         if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
             return;
         }
 
-        //populateUI();
+        populateUI();
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
@@ -58,11 +58,6 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
-        mBinding.textView4.setText(sandwich.getAlsoKnownAs().toString());
-        mBinding.textView.setText(sandwich.getIngredients().toString());
-
-        mBinding.textView2.setText(sandwich.getPlaceOfOrigin());
-        mBinding.textView3.setText(sandwich.getDescription());
 
 
     }
@@ -72,8 +67,20 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-   /* private void populateUI() {
+    private void populateUI() {
+        mBinding.textView4.setText("");
+        for(int i=0; i<sandwich.getAlsoKnownAs().size(); i++) {
+            mBinding.textView4.append(sandwich.getAlsoKnownAs().get(i) + "\n");
+        }
+
+        mBinding.textView.setText("");
+        for(int i=0; i<sandwich.getIngredients().size(); i++){
+            mBinding.textView.append(sandwich.getIngredients().get(i) + "\n");
+        }
+
+        mBinding.textView2.setText(sandwich.getPlaceOfOrigin());
+        mBinding.textView3.setText(sandwich.getDescription());
 
 
-    }*/
+    }
 }
