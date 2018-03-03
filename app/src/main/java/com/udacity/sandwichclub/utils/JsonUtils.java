@@ -12,41 +12,32 @@ import java.util.List;
 public class JsonUtils {
 
 
-
-
-
     public static Sandwich parseSandwichJson(String json) {
-
 
 
         try {
             JSONObject rootJson = new JSONObject(json);
             JSONObject SandwichName = rootJson.getJSONObject("name");
-            String mainName = SandwichName.getString("mainName");
+            String mainName = SandwichName.optString("mainName");
             JSONArray AlsoKnownArray = SandwichName.getJSONArray("alsoKnownAs");
-            String PlaceOfOrigin = rootJson.getString("placeOfOrigin");
+            String PlaceOfOrigin = rootJson.optString("placeOfOrigin");
 
-            String DescriptionObj = rootJson.getString("description");
-            String ImageURLObj = rootJson.getString("image");
+            String DescriptionObj = rootJson.optString("description");
+            String ImageURLObj = rootJson.optString("image");
             JSONArray IngredientArray = rootJson.getJSONArray("ingredients");
 
 
+            List<String> test = new ArrayList<>();
+            for (int i = 0; i < AlsoKnownArray.length(); i++) {
 
+                test.add(AlsoKnownArray.optString(i));
 
-
-            List<String> test =new ArrayList<>();
-            for(int i = 0; i<AlsoKnownArray.length(); i++) {
-
-                test.add(AlsoKnownArray.getString(i));
-
-                }
+            }
 
 
             List<String> test3 = new ArrayList<>();
-            for(int i = 0; i<IngredientArray.length(); i++){
-                test3.add(IngredientArray.getString(i));
-
-
+            for (int i = 0; i < IngredientArray.length(); i++) {
+                test3.add(IngredientArray.optString(i));
 
 
             }
@@ -61,12 +52,12 @@ public class JsonUtils {
             mySandwich.setIngredients(test3);
 
 
-        return mySandwich;
+            return mySandwich;
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-      return null;
+        return null;
     }
 }

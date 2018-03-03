@@ -54,27 +54,27 @@ public class DetailActivity extends AppCompatActivity {
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
 
-       setTitle(sandwich.getMainName());
-
-
-
+        setTitle(sandwich.getMainName());
 
 
     }
 
     private void closeOnError() {
+
+
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
     private void populateUI() {
+        // using databinding method to populate the data from JsonUtils on textviews of activity_detail.xml
         mBinding.textView4.setText("");
-        for(int i=0; i<sandwich.getAlsoKnownAs().size(); i++) {
+        for (int i = 0; i < sandwich.getAlsoKnownAs().size(); i++) {
             mBinding.textView4.append(sandwich.getAlsoKnownAs().get(i) + "\n");
         }
 
         mBinding.textView.setText("");
-        for(int i=0; i<sandwich.getIngredients().size(); i++){
+        for (int i = 0; i < sandwich.getIngredients().size(); i++) {
             mBinding.textView.append(sandwich.getIngredients().get(i) + "\n");
         }
 
